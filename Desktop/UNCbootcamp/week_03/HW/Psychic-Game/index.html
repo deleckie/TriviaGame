@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+
+  <title>The Psychic Game</title>
+</head>
+
+<body>
+  <section>
+    <div class="container">
+    <h1>The Psychic Game</h1>
+    <p id="output">I Have Selected A Letter On The Keybord...<br/>
+    You Have Nine Chances To Read My Mind...<br/>
+    Your Very Fate May Be At Stake...<br/>
+    Choose Wisely...<p/>
+  
+    <div class="container2">
+      <img src="assets/images/tumblr_ll36hnnQzI1qcolt7o1_1280.jpg" style="width:30%">
+    </div>
+  
+    <p>Wins: <span id="wins">0</span></p>
+    <p>Losses: <span id="losses">0</span></p>
+    <p>Chances Left: <span id="guessesLeft"></span></p>
+    <p>Previous Choices: <span id="userGuesses"></span></p>
+  </section>
+
+
+  <script type="text/javascript">
+    
+    var letters=["a", "b", "c","d","e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    var lettersGuessed=[];
+    var compGuess=null;
+    var guessesLeft=9;
+    var wins=0;
+    var losses=0;
+
+    var updateGuessesLeft=function() {
+      document.querySelector("#guessesLeft").innerHTML=guessesLeft;
+    };
+
+    var updateCompGuess=function() {
+      compGuess=letters[Math.floor(Math.random() * letters.length)];
+    };
+
+    var updateGuessesSoFar=function() {
+      document.querySelector("#userGuesses").innerHTML=lettersGuessed.join(", ");
+    };
+
+    var reset=function() {
+      guessesLeft=9;
+      lettersGuessed=[];
+      updateCompGuess();
+      updateGuessesLeft();
+      updateGuessesSoFar();
+    };
+
+    updateCompGuess();
+    updateGuessesLeft();
+
+    document.onkeyup=function(event) {
+      guessesLeft--;
+
+      var letter=String.fromCharCode(event.keyCode).toLowerCase();
+        lettersGuessed.push(letter);
+
+      updateGuessesLeft();
+      updateGuessesSoFar();
+
+
+      if (letter===compGuess) {
+
+        wins++;
+        document.querySelector("#wins").innerHTML=wins;
+
+        reset();
+      }
+
+      if (guessesLeft===0) {
+
+        losses++;
+        document.querySelector("#losses").innerHTML=losses;
+
+        reset();
+      }
+    };
+  </script>
+
+</body>
+
+</html>
